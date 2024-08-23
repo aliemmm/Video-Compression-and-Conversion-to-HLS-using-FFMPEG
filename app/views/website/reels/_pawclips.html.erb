@@ -1,0 +1,5 @@
+<div class="w-full max-w-[25rem] scroll-smooth h-screen overflow-y-scroll snap-y snap-mandatory pb-40" id="scrollbar">
+  <% urls.each_with_index do |url, index| %>
+    <%= render 'website/reels/reel', url: url, index: index %>
+  <% end %>
+</div>

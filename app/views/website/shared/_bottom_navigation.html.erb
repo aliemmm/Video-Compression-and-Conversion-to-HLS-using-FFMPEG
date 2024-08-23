@@ -1,0 +1,110 @@
+<div class="fixed bottom-0 w-full bg-white border-t border-gray-200" style="z-index: 10">
+  <div class="w-full max-w-[1440px]">
+    <div class="flex md:justify-between justify-center items-center w-full <%= params[:controller] == 'website/reels' ? 'max-w-screen' : 'max-w-[850px]' %> mx-auto">
+      <div class="relative group transition-all duration-300 ease-in-out md:block hidden max-w-[25rem] <%= params[:controller] == 'website/reels' ? 'ml-4' : '' %>">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+          </svg>
+        </div>
+        <input type="search" id="default-search" class="block w-[15rem] group-focus-within:w-[20rem] p-3 ps-10 text-sm text-gray-900 border-0 rounded-sm bg-gray-200 focus:bg-gray-50 transition-all duration-300 ease-in-out" placeholder="Search" required />
+      </div>
+      <div class="grid <%= params[:controller] == 'website/reels' ? 'grid-cols-12' : 'grid-cols-5' %> gap-8 md:ml-10">
+        <% if params[:controller] == 'website/reels' %>
+          <div class="w-full home-tabs col-span-7 ml-4">
+            <ul class="grid max-w-[25.3rem] grid-cols-3 gap-1 p-1 mx-auto my-2 bg-[#FF6F00] rounded-lg" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+              <li role="presentation" id="tab1">
+                <button class="px-5 py-1.5 text-xs font-medium text-white hover:text-black hover:bg-gray-200 rounded-lg w-full text-center" id="new-tab" data-tabs-target="#new" type="button" role="tab" aria-controls="new">
+                  New
+                </button>
+              </li>
+              <li role="presentation" id="tab2">
+                <button class="px-5 py-1.5 text-xs font-medium text-white hover:text-black hover:bg-gray-200 rounded-lg w-full text-center" id="popular-tab" data-tabs-target="#popular" type="button" role="tab" aria-controls="popular">
+                  Popular
+                </button>
+              </li>
+              <li role="presentation" id="tab3">
+                <button class="px-5 py-1.5 text-xs font-medium text-white hover:text-black hover:bg-gray-200 rounded-lg w-full text-center" id="pawclips-tab" data-tabs-target="#pawclips" type="button" role="tab" aria-controls="pawclips" aria-selected="true">
+                  Pawclips
+                </button>
+              </li>
+            </ul>
+          </div>
+        <% end %>
+        <button data-tooltip-target="tooltip-home" type="button" class="bottom_nav_active inline-flex flex-col items-center justify-center p-4 group <%= params[:controller] == 'website/reels' ? 'active' : '' %>">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mb-1 <%= params[:controller] == 'website/reels' ? 'text-[#FF6F00]' : 'text-gray-500' %>">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1" fill="none"/>
+            <circle cx="12" cy="12" r="7" stroke="currentColor" stroke-width="1" fill="none"/>
+            <path d="M6 8 L8 4 L10 8" stroke="currentColor" stroke-width="1" fill="none"/>
+            <path d="M18 8 L16 4 L14 8" stroke="currentColor" stroke-width="1" fill="none"/>
+            <circle cx="9" cy="14" r="1.5" fill="currentColor"/>
+            <circle cx="15" cy="14" r="1.5" fill="currentColor"/>
+            <path d="M10 10 Q12 8 14 10" stroke="currentColor" stroke-width="1" fill="none"/>
+            <circle cx="12" cy="13" r="1.5" fill="currentColor"/>
+            <path d="M12 13 H14" stroke="currentColor" stroke-width="1" fill="none"/>
+            <path d="M12 13 H10" stroke="currentColor" stroke-width="1" fill="none"/>
+            <path d="M12 13 V15" stroke="currentColor" stroke-width="1" fill="none"/>
+            <path d="M11 15 L9 17" stroke="currentColor" stroke-width="1" fill="none"/>
+            <path d="M13 15 L15 17" stroke="currentColor" stroke-width="1" fill="none"/>
+          </svg>
+          <span class="sr-only">PawClips</span>
+        </button>
+        <div id="tooltip-home" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-[#FF6F00] rounded-lg opacity-0 tooltip">
+          PawClips
+          <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+        <button data-tooltip-target="tooltip-bookmark" type="button" class="bottom_nav_active inline-flex flex-col items-center justify-center p-4 group">
+          <svg class="w-6 h-6 mb-1 text-gray-500 group-hover:text-[#FF6F00]" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 7h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z" />
+            <path d="M9 7V5a3 3 0 0 1 6 0v2" />
+            <circle cx="12" cy="13" r="1.5" />
+            <circle cx="9" cy="11" r="1" />
+            <circle cx="15" cy="11" r="1" />
+            <circle cx="10.5" cy="15" r="1" />
+            <circle cx="13.5" cy="15" r="1" />
+          </svg>
+          <span class="sr-only">PawMart</span>
+        </button>
+        <div id="tooltip-bookmark" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-[#FF6F00] rounded-lg opacity-0 tooltip">
+          PawMart
+          <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+        <label data-controller="video-editor" for="pawClipUpload" data-tooltip-target="tooltip-post" class="inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 group cursor-pointer">
+          <svg class="w-6 h-6 mb-1 text-gray-500 group-hover:text-[#FF6F00]" fill="none" viewBox="0 0 50 50" version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" overflow="inherit" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M25 21.473c2.804 0 5.158 1.9 5.823 4.469.836 3.221.723 6.751 4.398 8.584 3.262 1.11 4.496 2.505 4.496 6.245 0 2.985-2.554 6.158-5.847 6.554-3.682.553-6.548-.17-8.871-1.494-2.323 1.324-5.19 2.048-8.867 1.494-3.295-.396-5.848-3.58-5.848-6.554 0-3.66 1.317-5.209 4.573-6.27 4.007-2.047 3.469-5.635 4.363-8.717.723-2.49 3.037-4.311 5.78-4.311zm18.357-2.224c-.993-.863-5.046 2.506-6.321 4.172-.775.889-1.257 2.111-1.257 3.459 0 2.711 1.94 4.909 4.327 4.909 1.816 0 3.37-1.263 4.013-3.059 1.249-3.23 1.318-7.675-.762-9.481zm-36.716 0c-2.077 1.806-2.01 6.251-.759 9.481.643 1.796 2.196 3.059 4.011 3.059 2.389 0 4.327-2.198 4.327-4.909 0-1.348-.481-2.57-1.256-3.459-1.276-1.666-5.328-5.035-6.323-4.172zm23.694-17.707c10.088 1.712 9.38 18.702 1.303 17.333-2.33-.396-4.06-2.518-4.323-5.053-.267-2.578-.868-12.938 3.02-12.28zm-10.67 0c3.889-.659 3.287 9.701 3.02 12.279-.263 2.536-1.991 4.657-4.321 5.053-8.079 1.371-8.786-15.62 1.301-17.332z"></path></g></svg>
+          <span class="sr-only">New PawClip</span>
+          <input type="file" id="pawClipUpload" class="hidden" data-action="change->video-editor#open_editor" data-video-editor-target="input" accept="video/mp4, video/mkv, video/mov" >
+        </label>
+        <div id="tooltip-post" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-[#FF6F00] rounded-lg opacity-0 tooltip">
+          New PawClip
+          <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+        <button data-tooltip-target="tooltip-search" type="button" class="inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 group">
+          <svg class="w-5 h-5 mb-1 text-gray-500 group-hover:text-blue-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+          </svg>
+          <span class="sr-only">Search</span>
+        </button>
+        <div id="tooltip-search" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip">
+          Search
+          <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+        <button data-tooltip-target="tooltip-settings" type="button" class="inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 group">
+          <svg class="w-5 h-5 mb-1 text-gray-500 group-hover:text-blue-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12.25V1m0 11.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M4 19v-2.25m6-13.5V1m0 2.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M10 19V7.75m6 4.5V1m0 11.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM16 19v-2"/>
+          </svg>
+          <span class="sr-only">Settings</span>
+        </button>
+        <div id="tooltip-settings" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip">
+          Settings
+          <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render 'website/reels/editing_modal' %>
+<div class="lg:hidden hidden fixed inset-0 w-screen bg-black/70 transition-all duration-300" id="editor_overlay" style="z-index: 105"></div>
+<!--<div>-->
+<!--  <img src="<%#= asset_path('volume.svg') %>" id="volumeButton" class="w-8 h-8 hover:opacity-75 cursor-pointer hidden" onclick="muteVideo()"/>-->
+<!--  <img src="<%#= asset_path('mute.svg') %>" id="muteButton" class="w-8 h-8 hover:opacity-75 cursor-pointer" onclick="unmuteVideo()"/>-->
+<!--</div>-->

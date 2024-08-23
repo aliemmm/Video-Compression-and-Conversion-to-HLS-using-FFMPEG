@@ -1,0 +1,175 @@
+<div class="md:px-40 sm:px-10 sm:pt-5">
+  <div class="flex flex-row md:justify-between justify-center">
+    <% urls = ["https://link.testfile.org/zwj7WO", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"] %>
+    <div class="rounded-lg bg-white border border-gray-300 w-full max-w-[18rem] h-[20rem] overflow-hidden lg:block hidden">
+    </div>
+    <div id="myTabContent">
+      <div class="hidden" id="new" role="tabpanel" aria-labelledby="new-tab">
+        <%#= render 'website/reels/pawclips', urls: urls %>
+      </div>
+      <div class="hidden" id="popular" role="tabpanel" aria-labelledby="popular-tab">
+        <%#= render 'website/reels/pawclips', urls: urls %>
+      </div>
+      <div class="hidden" id="pawclips" role="tabpanel" aria-labelledby="pawclips-tab">
+        <%= render 'website/reels/pawclips', urls: urls %>
+      </div>
+    </div>
+    <div class="rounded-lg bg-white border border-gray-300 w-full max-w-[18rem] h-[20rem] overflow-hidden lg:block hidden">
+    </div>
+  </div>
+</div>
+<%= render 'website/reels/comment_drawer' %>
+<script>
+    $(document).ready(function () {
+        const container = document.getElementById('scrollbar');
+        let isDown = false;
+        let startY;
+        let scrollTop;
+
+        container.addEventListener('mousedown', (e) => {
+            isDown = true;
+            container.classList.add('active');
+            startY = e.pageY - container.offsetTop;
+            scrollTop = container.scrollTop;
+        });
+
+        container.addEventListener('mouseleave', () => {
+            isDown = false;
+            container.classList.remove('active');
+        });
+
+        container.addEventListener('mouseup', () => {
+            isDown = false;
+            container.classList.remove('active');
+        });
+
+        container.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const y = e.pageY - container.offsetTop;
+            const walk = (y - startY) * 2;
+            container.scrollTop = scrollTop - walk;
+        });
+
+        const options = {
+            root: container,
+            rootMargin: '0px',
+            threshold: 0.5
+        };
+
+        const callback = (entries, observer) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+                const seekbarId = video.id.split('_')[1]
+                const seekbar = document.getElementById(`seekBar${seekbarId}`)
+                video.addEventListener('timeupdate', function() {
+                    seekbar.value = (100 / video.duration) * video.currentTime;
+                });
+                seekbar.addEventListener('input', function() {
+                    video.currentTime = video.duration * (seekbar.value / 100);
+                });
+                if (entry.isIntersecting) {
+                    video.play();
+                    document.getElementById(`pauseButton${seekbarId}`).classList.add('hidden')
+                    document.getElementById(`playButton${seekbarId}`).classList.remove('hidden')
+                } else {
+                    video.pause();
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(callback, options);
+
+        document.querySelectorAll('video').forEach(video => {
+            observer.observe(video);
+        });
+    })
+
+    function pauseVideo(id) {
+        document.getElementById(`videoPlayer_${id}`).pause()
+        document.getElementById(`pauseButton${id}`).classList.remove('hidden')
+        document.getElementById(`playButton${id}`).classList.add('hidden')
+    }
+
+    function playVideo(id) {
+        document.getElementById(`videoPlayer_${id}`).play()
+        document.getElementById(`pauseButton${id}`).classList.add('hidden')
+        document.getElementById(`playButton${id}`).classList.remove('hidden')
+    }
+
+    function muteVideo() {
+        document.querySelectorAll('video').forEach(function (video) {
+            video.muted = true
+        })
+        document.getElementById(`volumeButton`).classList.add('hidden')
+        document.getElementById(`muteButton`).classList.remove('hidden')
+    }
+
+    function unmuteVideo() {
+        document.querySelectorAll('video').forEach(function (video) {
+            video.muted = false
+        })
+        document.getElementById(`volumeButton`).classList.remove('hidden')
+        document.getElementById(`muteButton`).classList.add('hidden')
+    }
+
+    // function unmuteWithDiv() {
+    //     document.querySelectorAll('video').forEach(function (video) {
+    //         video.muted = false
+    //     })
+    //     document.getElementById(`volumeUpMuteButton`).classList.add('hidden')
+    //     document.getElementById(`volumeUpButton`).classList.remove('hidden')
+    // }
+
+
+    function showSeekbar(id) {
+        document.getElementById(`seekBar${id}`).classList.remove('hidden')
+        document.getElementById(`playerIcons${id}`).classList.remove('hidden')
+        document.getElementById(`sideIcons${id}`).classList.remove('hidden')
+    }
+
+    function hideSeekbar(id) {
+        document.getElementById(`seekBar${id}`).classList.add('hidden')
+        document.getElementById(`playerIcons${id}`).classList.add('hidden')
+        document.getElementById(`sideIcons${id}`).classList.add('hidden')
+    }
+
+    function onDivVideoHandle(id) {
+        if(document.getElementById(`videoPlayer_${id}`).paused) {
+            playVideo(id)
+        } else {
+            pauseVideo(id)
+        }
+    }
+
+    // function showVolumePercent() {
+    //     document.getElementById('volumeUp').classList.remove('hidden')
+    //     document.getElementById('volumeButton').classList.remove('hidden')
+    // }
+
+    // function volumeControl(volume) {
+    //     document.querySelectorAll('video').forEach(function (video) {
+    //         setVolume(volume.value, video)
+    //         if (volume.value === "0") {
+    //             document.getElementById('volumeUpMuteButton').classList.remove('hidden')
+    //             document.getElementById('volumeUpButton').classList.add('hidden')
+    //         } else {
+    //             document.getElementById('volumeUpMuteButton').classList.add('hidden')
+    //             document.getElementById('volumeUpButton').classList.remove('hidden')
+    //         }
+    //     })
+    // }
+    //
+    // function setVolume(percentage, video) {
+    //     video.volume = percentage / 100;
+    // }
+
+    function buffering(id) {
+        document.getElementById(`svgContainer${id}`).classList.remove('hidden')
+    }
+
+    function removeBuffering(id) {
+        document.getElementById(`svgContainer${id}`).classList.add('hidden')
+    }
+</script>
+

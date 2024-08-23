@@ -1,0 +1,173 @@
+<style>
+    .select2-container {
+        margin-top: 8px !important;
+    }
+
+    .select2-search__field:focus {
+        --tw-ring-color: none !important
+    }
+    .select2-search__field {
+        background-color: transparent;
+    }
+    .select2-container--default .select2-selection--single {
+        background-color: transparent;
+        border: 0px !important;
+        border-radius: 0 !important;
+        border-bottom: 1px #424344 solid !important;
+
+    }
+    .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable{
+        background-color: #FF8717 !important;
+    }
+
+    .select2-dropdown {
+        background-color: #444 !important;
+        border: 0 !important;
+    }
+
+    .select2-results__option--selected {
+        background-color: gray !important;
+        color: darkslategrey !important;
+    }
+
+    .select2-results__option {
+        color: white !important;
+    }
+</style>
+<%
+  fontFamilies = [
+    'Times New Roman', 'Verdana', 'Helvetica', 'Tahoma', 'Trebuchet MS', 'Arial',
+    'Georgia', 'Garamond', 'Courier New', 'Brush Script MT', 'Comic Sans MS',
+    'Arial Black', 'Impact', 'Lucida Console', 'Lucida Sans Unicode', 'Palatino Linotype',
+    'Arial Narrow', 'Century Gothic', 'Segoe UI', 'Comic Sans', 'Calibri',
+    'Cambria', 'Futura', 'Didot', 'Baskerville', 'Georgia', 'Garamond',
+    'Helvetica Neue', 'Montserrat', 'Open Sans', 'Roboto', 'Lato', 'Oswald'
+  ]
+%>
+<div id="video-editor" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full max-h-full" style="z-index: 205">
+  <div class="relative p-4 w-full max-w-full h-full max-h-full">
+    <div class="flex flex-col relative bg-white rounded-lg shadow max-w-full h-full h-full max-h-full rounded-xl">
+<!--      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">-->
+<!--        <h3 class="text-xl font-semibold text-gray-900">-->
+<!--          Terms of Service-->
+<!--        </h3>-->
+<!--        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="video-editor">-->
+<!--          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">-->
+<!--            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>-->
+<!--          </svg>-->
+<!--          <span class="sr-only">Close modal</span>-->
+<!--        </button>-->
+<!--      </div>-->
+      <div class="bg-[#212223] rounded-xl h-full">
+        <div class="hidden" id="loader">
+          <%= render 'website/shared/paw_loader' %>
+        </div>
+        <div class="grid grid-cols-12 h-full hidden" data-controller="video-editor" id="editor_modal_content">
+          <div class="col-span-1 mt-20">
+            <div class="flex flex-col gap-3 items-center">
+              <div title="Filter" class="cursor-pointer border border-[#424344] hover:border-gray-500 rounded-2xl w-[5rem] h-[5rem] flex flex-col justify-center items-center" data-action="click->video-editor#open_effects_view">
+                <svg class="w-6 h-6" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M24 40.8332C26.123 42.7334 28.9266 43.8888 32 43.8888C38.6274 43.8888 44 38.5162 44 31.8888C44 26.588 40.5629 22.0899 35.7957 20.5016" stroke="#d4cece" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M27.1711 27.4989C27.7058 28.8585 27.9995 30.3394 27.9995 31.8888C27.9995 38.5162 22.6269 43.8888 15.9995 43.8888C9.37209 43.8888 3.99951 38.5162 3.99951 31.8888C3.99951 26.5739 7.45492 22.0659 12.2418 20.489" stroke="#d4cece" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M24 27.8891C30.6274 27.8891 36 22.5165 36 15.8891C36 9.26165 30.6274 3.88907 24 3.88907C17.3726 3.88907 12 9.26165 12 15.8891C12 22.5165 17.3726 27.8891 24 27.8891Z" stroke="#d4cece" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                <p class="text-center text-xs mt-1 text-gray-500">Filters</p>
+              </div>
+              <div title="Annotate" class="cursor-pointer border border-[#424344] hover:border-gray-500 rounded-2xl w-[5rem] h-[5rem] flex flex-col justify-center items-center" data-action="click->video-editor#open_text_fields">
+                <svg fill="#d4cece" class="w-6 h-6" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.001 512.001" xml:space="preserve" stroke="#d4cece" stroke-width="0.0051200099999999995"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M498.538,60.958l-47.496-47.495C442.361,4.782,430.817,0,418.539,0s-23.82,4.781-32.502,13.463L45.549,353.953 c0,0-0.004,0.011-0.012,0.033c-1.158,1.165-2.046,2.601-2.538,4.226L0.437,498.848c-1.089,3.599-0.109,7.507,2.55,10.167 C4.928,510.954,7.535,512,10.2,512c0.986,0,1.981-0.144,2.954-0.437l140.637-42.561c1.631-0.494,3.073-1.386,4.24-2.551 c0.003,0,0.018,0.001,0.018,0.001l340.489-340.489c8.682-8.682,13.463-20.225,13.463-32.502 C512.001,81.183,507.22,69.641,498.538,60.958z M25.48,486.521l10.614-35.074l24.46,24.46L25.48,486.521z M82.7,469.204 L42.797,429.3l14.793-48.883l73.993,73.993L82.7,469.204z M150.837,444.816l-83.652-83.652l254.821-254.821l83.652,83.652 L150.837,444.816z M420.082,175.571L336.43,91.919l19.81-19.81l83.652,83.652L420.082,175.571z M484.114,111.539l-29.798,29.798 l-83.652-83.652l29.798-29.798c4.828-4.829,11.249-7.488,18.077-7.488c6.829,0,13.25,2.659,18.078,7.488l47.496,47.496 c4.829,4.829,7.488,11.249,7.488,18.078C491.602,100.29,488.943,106.71,484.114,111.539z"></path> </g> </g> <g> <g> <path d="M307.069,256.948c-3.983-3.983-10.441-3.983-14.425,0l-4.08,4.08c-3.983,3.983-3.983,10.441,0,14.425 c1.992,1.992,4.602,2.987,7.212,2.987s5.221-0.995,7.212-2.987l4.08-4.08C311.052,267.389,311.052,260.931,307.069,256.948z"></path> </g> </g> <g> <g> <path d="M273.411,290.605c-3.983-3.984-10.441-3.984-14.424,0L143.736,405.856c-3.983,3.983-3.983,10.441,0,14.425 c1.992,1.992,4.602,2.987,7.212,2.987c2.61,0,5.221-0.995,7.212-2.987L273.411,305.03 C277.394,301.047,277.394,294.589,273.411,290.605z"></path> </g> </g> </g></svg>              <p class="text-center text-xs mt-1 text-gray-500">Annotate</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-10 max-h-[35rem] max-w-[80%] ml-[5rem]">
+            <div class="p-4 md:p-5 space-y-4 h-full" id="editor"></div>
+            <div id="text-layer" class="flex flex-row justify-center hidden">
+              <div class="flex flex-col mt-5">
+                <input data-action="input->video-editor#add_text" id="text_field" type="text" class="w-[5rem] pb-1 pl-1 pr-1 border-0 border-b border-[#424344] focus:outline-none active:outline-none text-sm bg-transparent text-white" placeholder="Text">
+              </div>
+              <div class="flex flex-col ml-5 mt-5">
+                <input data-action="input->video-editor#add_text" id="x_field" type="number" class="w-[2rem] text-center pb-1 pl-1 pr-1 border-0 border-b border-[#424344] active:outline-none text-sm bg-transparent text-white" placeholder="x">
+              </div>
+              <div class="flex flex-col ml-5 mt-5">
+                <input data-action="input->video-editor#add_text" id="y_field" type="number" class="w-[2rem] text-center pb-1 pl-1 pr-1 border-0 border-b border-[#424344] focus:border-gray-500 active:outline-none text-sm bg-transparent text-white" placeholder="y">
+              </div>
+              <div class="flex flex-col ml-5">
+                <label for="fill_color_field" class="text-gray-400 text-xs text-center">Color</label>
+                <label data-action="change->video-editor#add_text" for="fill_color_field" id="picker-color" class="rounded-full border border-[#424344] w-[2rem] h-[2rem] mt-2 cursor-pointer" style="align-self: center">
+                </label>
+                <input id="fill_color_field" value="#080808" data-video-editor-target="fillColorField" data-coloris class="hidden">
+              </div>
+              <div class="flex flex-col ml-5">
+                <label for="stroke_color_field" class="text-gray-400 text-xs text-center">Stroke Color</label>
+                <label data-action="change->video-editor#add_text" for="stroke_color_field" id="stroke-picker-color" class="rounded-full border border-[#424344] w-[2rem] h-[2rem] mt-2 cursor-pointer" style="align-self: center">
+                </label>
+                <input id="stroke_color_field" value="#080808" data-video-editor-target="stokeColorField" data-coloris class="hidden">
+              </div>
+              <div class="flex flex-col ml-5">
+                <label for="stroke_position" class="text-gray-400 text-xs text-center">Stroke Position</label>
+                <select id="stroke_position" class="text-center border-0 border-b border-[#424344] focus:border-gray-500 active:outline-none bg-transparent">
+                  <option value="Outside">Outside</option>
+                  <option value="Center">Center</option>
+                  <option value="Inside">Inside</option>
+                </select>
+              </div>
+              <div class="flex flex-col ml-5">
+                <label for="font_size" class="text-gray-400 text-xs text-center">Font Size</label>
+                <select id="font_size" class="text-center border-0 border-b border-[#424344] focus:border-gray-500 active:outline-none bg-transparent">
+                  <% (10...500).each do |no| %>
+                    <% if no.even? %>
+                      <option value="<%= no %>"><%= no %></option>
+                    <% end %>
+                  <% end %>
+                </select>
+              </div>
+              <div class="flex flex-col ml-5">
+                <label for="font_family" class="text-gray-400 text-xs text-center">Font Family</label>
+                <select id="font_family" class="text-center border-0 border-b border-[#424344] focus:border-gray-500 active:outline-none bg-transparent">
+                  <% fontFamilies.each do |family| %>
+                    <option value="<%= family %>"><%= family.capitalize %></option>
+                  <% end %>
+                </select>
+              </div>
+            </div>
+            <div class="flex flex-col justify-center gap-1 hidden items-center" id="filter_layer">
+              <div>
+                <div id="blur_radius" class="hidden">
+                  <input type="range" min="0" max="100" id="blur_radius_input" class="w-[20rem]" value="10" data-action="change->video-editor#blur_effect">
+                </div>
+              </div>
+              <div class="flex flex-row justify-center gap-2">
+                <div class="w-20 h-20 rounded-lg cursor-pointer" id="grayscale" data-action="click->video-editor#grayscale_effect">
+                  <img src="<%= asset_path('grayscale_thumb.png') %>" class="w-full rounded-lg h-full object-cover">
+                </div>
+                <div class="w-20 h-20 rounded-lg cursor-pointer" id="blur" data-action="click->video-editor#blur_effect">
+                  <img src="<%= asset_path('grayscale_thumb.png') %>" class="w-full rounded-lg h-full object-cover">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-1">
+            <img src="<%= asset_path('pause.svg') %>" id="pause_svg" class="w-8 h-8 cursor_pointer hover:opacity-75" data-action="click->video-editor#pause_video">
+            <img src="<%= asset_path('play.svg') %>" id="play_svg" class="w-8 h-8 cursor_pointer hover:opacity-75" data-action="click->video-editor#play_video">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  Coloris({
+      themeMode: 'dark',
+      alpha: true,
+      formatToggle: true,
+      focusInput: true,
+      swatches: ['#264653', '#2a9d8f', '#e9c46a', 'rgb(244,162,97)', '#e76f51', '#d62828', 'navy', '#07b', '#0096c7', '#00b4d880', 'rgba(0,119,182,0.8)'],
+      defaultColor: '#000000',
+  });
+
+  document.addEventListener('coloris:pick', event => {
+      if (event.detail.currentEl.id === "fill_color_field") {
+          document.getElementById('picker-color').style.backgroundColor = event.detail.color
+          document.getElementById('fill_color_field').value = event.detail.color
+      } else {
+          document.getElementById('stroke-picker-color').style.backgroundColor = event.detail.color
+          document.getElementById('stroke_color_field').value = event.detail.color
+      }
+  });
+</script>

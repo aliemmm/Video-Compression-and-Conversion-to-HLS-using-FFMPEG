@@ -6,8 +6,6 @@ Rails.application.routes.draw do
   # get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  root "website/reels#index"
-  scope module: 'website' do
-    get '/furclips', to: 'reels#index'
-  end
+  root to: "compression#index"
+  resources :compression
 end

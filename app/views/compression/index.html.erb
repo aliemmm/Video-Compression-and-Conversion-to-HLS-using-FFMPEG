@@ -1,0 +1,16 @@
+<div class="main_div">
+  <%= form_with(url: '/compression', method: :post) do |f| %>
+    <div class="form">
+      <span class="form-title">Upload your file</span>
+      <p class="form-paragraph">
+        File should be an image
+      </p>
+      <label for="file-input" class="drop-container">
+        <span class="drop-title">Drop files here</span>
+        or
+        <%= f.file_field :video, accept: 'video/*', required: true, id: "file-input" %>
+      </label>
+    </div>
+    <%= f.submit 'Compressed', class: 'submit_btn'%>
+  <% end %>
+</div>
